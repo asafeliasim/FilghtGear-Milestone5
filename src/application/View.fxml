@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import application.MapDisplayer?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ViewController">
+   <children>
+      <AnchorPane fx:id="Home" layoutY="-1.0" prefHeight="401.0" prefWidth="200.0" style="-fx-background-color: #586e91;">
+         <children>
+            <Button layoutX="17.0" layoutY="65.0" mnemonicParsing="false" onAction="#HomeDisplay" prefHeight="25.0" prefWidth="167.0" text="Manual Mode" />
+            <Button layoutX="18.0" layoutY="175.0" mnemonicParsing="false" onAction="#AutoDisplay" prefHeight="25.0" prefWidth="167.0" text="AutoPilot Mode" />
+            <Button layoutX="16.0" layoutY="294.0" mnemonicParsing="false" onAction="#MapDisplay" prefHeight="25.0" prefWidth="167.0" text="MapSimulator" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="Manual" layoutX="211.0" layoutY="13.0" prefHeight="384.0" prefWidth="356.0" visible="false">
+         <children>
+            <Slider fx:id="rudder" layoutX="11.0" layoutY="343.0" max="1.0" min="-1.0" onMouseDragged="#rudderIsDrag" prefHeight="10.0" prefWidth="330.0" />
+            <Slider fx:id="throttle" layoutX="4.0" layoutY="56.0" max="1.0" onMouseDragged="#throttleIsDrag" orientation="VERTICAL" prefHeight="271.0" prefWidth="14.0" />
+            <Text fill="#586e91" fontSmoothingType="LCD" layoutX="100.0" layoutY="36.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Manual" textAlignment="CENTER" wrappingWidth="150.80792236328125">
+               <font>
+                  <Font name="Arial Bold" size="28.0" />
+               </font>
+            </Text>
+            <Circle fill="#d0d0d1" layoutX="175.0" layoutY="192.0" radius="100.0" stroke="#f5f5f5" strokeType="INSIDE" />
+            <Circle fx:id="joyStick" layoutX="175.0" layoutY="192.0" onMouseDragged="#joyStickMove" onMouseReleased="#backToTheCenter" radius="40.0" stroke="#3b3939" strokeWidth="1.5">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </fill>
+               <effect>
+                  <DropShadow color="#959090" offsetX="7.0" offsetY="7.0" spread="0.2" />
+               </effect>
+            </Circle>
+            <Text layoutX="88.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="←  aileron  → " textAlignment="CENTER" wrappingWidth="179.99995930989587">
+               <font>
+                  <Font name="Arial Black" size="20.0" />
+               </font>
+            </Text>
+            <Text layoutX="228.0" layoutY="200.0" rotate="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="←  elevator  → " textAlignment="CENTER" wrappingWidth="179.99995930989587">
+               <font>
+                  <Font name="Arial Black" size="20.0" />
+               </font>
+            </Text>
+            <Button layoutX="23.0" layoutY="14.0" mnemonicParsing="false" onAction="#HomeDisplay" text="Home">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Label fx:id="boundry" layoutX="94.0" layoutY="56.0" prefHeight="23.0" prefWidth="167.0" text="Out from Joystick boundarys" textFill="#df4848" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Text layoutX="95.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="←  rudder  → " textAlignment="CENTER" wrappingWidth="179.99995930989587">
+               <font>
+                  <Font name="Arial Black" size="20.0" />
+               </font>
+            </Text>
+            <Text layoutX="-52.0" layoutY="199.0" rotate="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="←  throttle  → " textAlignment="CENTER" wrappingWidth="179.99995930989587">
+               <font>
+                  <Font name="Arial Black" size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="AutoPilot" layoutX="200.0" prefHeight="401.0" prefWidth="419.0" style="-fx-background-color: #7db6d1;" visible="false">
+         <children>
+            <Button layoutX="118.0" layoutY="7.0" mnemonicParsing="false" onAction="#LoadScript" prefHeight="14.0" prefWidth="128.0" text="Load Script" />
+            <TextArea fx:id="scriptPane" layoutX="26.0" layoutY="47.0" prefHeight="305.0" prefWidth="349.0" />
+            <Button layoutX="38.0" layoutY="358.0" mnemonicParsing="false" onAction="#HomeDisplay" text="Home" />
+            <Button fx:id="RunScript" layoutX="316.0" layoutY="358.0" mnemonicParsing="false" onAction="#runScriptPressed" prefHeight="25.0" prefWidth="49.0" text="Run" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="MapPane" layoutX="203.0" layoutY="9.0" prefHeight="391.0" prefWidth="394.0" visible="false">
+         <children>
+            <Button layoutX="28.0" layoutY="8.0" mnemonicParsing="false" onAction="#ConnectWindow" prefHeight="25.0" prefWidth="87.0" text="Connect" />
+            <Button layoutX="125.0" layoutY="8.0" mnemonicParsing="false" onAction="#loadMap" prefHeight="25.0" prefWidth="111.0" text="Load Data" />
+            <Button layoutX="245.0" layoutY="8.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="Calculate Path" />
+            <Button layoutX="173.0" layoutY="351.0" mnemonicParsing="false" onAction="#HomeDisplay" text="Home" />
+            <AnchorPane fx:id="PopUpConnect" layoutX="20.0" layoutY="81.0" prefHeight="157.0" prefWidth="356.0" visible="false">
+               <children>
+                  <TextField fx:id="PortId" layoutX="77.0" layoutY="14.0" prefHeight="28.0" prefWidth="259.0" />
+                  <TextField fx:id="IpId" layoutX="77.0" layoutY="79.0" prefHeight="25.0" prefWidth="259.0" />
+                  <Text layoutX="14.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Port:" textAlignment="CENTER" wrappingWidth="48.666666666666515">
+                     <font>
+                        <Font name="Arial" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text fontSmoothingType="LCD" layoutX="8.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ip :" textAlignment="CENTER" wrappingWidth="60.80335998535156">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Text>
+               </children>
+               <effect>
+                  <Glow level="0.76">
+                     <input>
+                        <Lighting specularConstant="0.86" specularExponent="31.16" surfaceScale="1.67">
+                           <bumpInput>
+                              <Shadow blurType="GAUSSIAN" color="#da0606" height="0.0" radius="6.665" width="28.66" />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant color="#a299cd" />
+                           </light>
+                        </Lighting>
+                     </input>
+                  </Glow>
+               </effect>
+            </AnchorPane>
+            <AnchorPane style="-fx-background-image: https://www.flightgear.org/wp-content/uploads/2017/01/cropped-viggen03.jpg;" />
+            <MapDisplayer fx:id="MapDisplayer" height="300.0" layoutX="7.0" layoutY="46.0" width="380.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
